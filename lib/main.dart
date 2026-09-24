@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:owais_project/screens/home/beverages.dart';
+import 'package:owais_project/screens/home/explore.dart';
+import 'package:owais_project/screens/home/filter.dart';
 import 'package:owais_project/screens/start_screen/onBoarding_screen.dart';
 import 'package:owais_project/screens/start_screen/splash_screen.dart';
 
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: OnboardingScreen()
+      home: FilterScreen()
     );
   }
 }
