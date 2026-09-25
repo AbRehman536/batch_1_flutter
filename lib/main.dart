@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/screens/home/beverages.dart';
 import 'package:owais_project/screens/home/explore.dart';
 import 'package:owais_project/screens/home/filter.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: FilterScreen()
+      home: LoginScreen()
     );
   }
 }
