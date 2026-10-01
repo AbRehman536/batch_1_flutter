@@ -9,4 +9,10 @@ class AppAssets {
   static String can1Image = "assets/images/can1.png";
   static String mycart1Image = "assets/images/mycart1.png";
   static String pepperImage = "assets/images/pepper.png";
+  static String personImage = "assets/images/person.png";
+
+
+
+  ///Icons
+  static String notificationIcon = "assets/icons/notification.png";
 }
