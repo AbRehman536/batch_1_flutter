@@ -5,6 +5,7 @@ import 'package:owais_project/screens/home/beverages.dart';
 import 'package:owais_project/screens/home/explore.dart';
 import 'package:owais_project/screens/home/favorite.dart';
 import 'package:owais_project/screens/home/filter.dart';
+import 'package:owais_project/screens/home/home.dart';
 import 'package:owais_project/screens/home/my_cart.dart';
 import 'package:owais_project/screens/profile/profile.dart';
 import 'package:owais_project/screens/start_screen/onBoarding_screen.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: ProfileScreen(),
+      home: HomeScreen(),
     );
   }
 }
