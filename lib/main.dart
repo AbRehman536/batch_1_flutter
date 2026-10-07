@@ -1,7 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:owais_project/extra/tab_bar.dart';
 import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/screens/home/beverages.dart';
+import 'package:owais_project/screens/home/bottom_bar.dart';
 import 'package:owais_project/screens/home/explore.dart';
 import 'package:owais_project/screens/home/favorite.dart';
 import 'package:owais_project/screens/home/filter.dart';
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: HomeScreen(),
+      home: TabBarScreen(),
     );
   }
 }
