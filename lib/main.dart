@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:owais_project/extra/pageView.dart';
 import 'package:owais_project/extra/tab_bar.dart';
 import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/screens/home/beverages.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: TabBarScreen(),
+      home: PageViewScreen(),
     );
   }
 }
