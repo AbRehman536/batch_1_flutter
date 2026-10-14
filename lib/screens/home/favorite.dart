@@ -71,7 +71,23 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   );
                 },),
               ),
-              CustomButton(btnLabel: "Add All to Cart", onPressed: (){})
+              CustomButton(btnLabel: "Add All to Cart", onPressed: (){
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Oop's Order Failed"),
+                      content: Text("Something went wrong"),
+                      actions: [
+                        CustomButton(btnLabel: "Please Try Again", onPressed: (){}),
+                        TextButton(onPressed: (){
+                          Navigator.pop(context);
+                        }, child: Text("Back to home")),
+                      ],
+                    );
+                  }, );
+              })
             ],
           ),
         ),

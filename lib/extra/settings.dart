@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/screens/home/favorite.dart';
 import 'package:pinput/pinput.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -21,6 +23,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     "Graphics",
     "Marketing"
   ];
+  ///Check box Egg
+  bool checkEgg = false;
+  bool checkPasta = false;
   String? selectedCourse;
   @override
   Widget build(BuildContext context) {
@@ -29,6 +34,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text("Settings"),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
+        actions: [
+          PopupMenuButton(itemBuilder: (BuildContext context) { 
+            return [
+              PopupMenuItem(child: ListTile(
+                leading: Icon(Icons.new_releases_rounded),
+                title: Text("Warning"),
+                trailing: Icon(Icons.arrow_forward_ios),
+              )),
+              PopupMenuItem(child: ListTile(
+                onTap: (){
+                  Navigator.push(
+                      context, MaterialPageRoute(
+                      builder: (context)=> FavoriteScreen()));
+                },
+                leading: Icon(Icons.history),
+                title: Text("History"),
+                trailing: Icon(Icons.arrow_forward_ios),
+              )),
+              PopupMenuItem(child: ListTile(
+                leading: Icon(Icons.upload),
+                title: Text("Downloads"),
+                trailing: Icon(Icons.arrow_forward_ios),
+              )),
+              PopupMenuItem(child: ListTile(
+                leading: Icon(Icons.settings),
+                title: Text("Settings"),
+                trailing: Icon(Icons.arrow_forward_ios),
+              )),
+            ];
+          },)
+        ],
       ),
       body: Center(
         child: Column(
@@ -101,6 +137,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     selectedCourse = val;
                   });
                 }),
+
+            CheckboxListTile(
+              title: Text("Eggs"),
+                value: checkEgg,
+                onChanged: (val){
+                  setState(() {
+                    checkEgg = val!;
+                  });
+                }),
+            Row(
+              children: [
+                Checkbox(
+                    value: checkPasta,
+                    onChanged: (val){
+                      setState(() {
+                        checkPasta = val!;
+                      });
+                    }),
+                Text("Noodles & Pasta",
+                style: TextStyle(
+                  color: checkPasta ? AppColors.primaryColor : Colors.black
+                ),)
+              ],
+            )
 
           ],
         ),
