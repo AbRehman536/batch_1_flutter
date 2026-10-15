@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
 import 'package:owais_project/models/product_model.dart';
@@ -24,11 +25,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
+          preferredSize: Size.fromHeight(60.h),
           child: CustomAppbar(
               title: "Find Product")),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding:  EdgeInsets.all(15.sp),
         child: Column(
           children: [
             TextField(
@@ -39,24 +40,25 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 hint: Text("Search Product"),
                 border: OutlineInputBorder(
                   borderSide: .none,
-                  borderRadius: .circular(15)
+                  borderRadius: .circular(15.r)
                 )
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20.h
+              ,),
             Expanded(
               child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15,
-                    mainAxisExtent: 189,
+                    crossAxisSpacing: 15.w,
+                    mainAxisSpacing: 15.h,
+                    mainAxisExtent: 189.h,
                   ),
                   itemCount: productList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       decoration: BoxDecoration(
-                        borderRadius: .circular(18),
+                        borderRadius: .circular(18.r),
                         color: productList[index].color.withOpacity(0.2),
                         // border: Border.all(
                         //   color: Colors.black,
@@ -67,12 +69,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset(productList[index].image.toString(),width: 111,height: 74,),
-                          SizedBox(height: 20,),
+                          Image.asset(productList[index].image.toString(),width: 111.w,height: 74.h,),
+                          SizedBox(height: 20.h,),
                           Text(productList[index].title.toString(),
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             color: Color(0xff181725)
                           ),)
                         ],

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/extra/drawerModel.dart';
 import 'package:owais_project/screens/home/favorite.dart';
 import 'package:pinput/pinput.dart';
 
@@ -27,6 +29,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool checkEgg = false;
   bool checkPasta = false;
   String? selectedCourse;
+  ///Drawer List
+  List<Drawermodel> drawerList = [
+    Drawermodel(title: "My Files", icon: Icons.file_copy),
+    Drawermodel(title: "Starred", icon: Icons.star),
+    Drawermodel(title: "Recent", icon: Icons.history),
+    Drawermodel(title: "Offline", icon: Icons.offline_bolt),
+    Drawermodel(title: "Upload", icon: Icons.upload_outlined),
+    Drawermodel(title: "Trash", icon: Icons.delete),
+  ];
+  ///Single Selection
+  int selectedIndex = -1;
+  ///Multi Selection
+  List<int> indexList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,8 +175,67 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   color: checkPasta ? AppColors.primaryColor : Colors.black
                 ),)
               ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: drawerList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    onTap: (){
+                      setState(() {
+                       if(indexList.contains(index)){
+                         indexList.remove(index);
+                       }
+                       else{
+                         indexList.add(index);
+                       }
+                      });
+                    },
+                   tileColor: indexList.contains(index) ? Colors.blue.withOpacity(0.2) : Colors.white,
+                   textColor: indexList.contains(index) ? Colors.blueAccent : Colors.black,
+                   iconColor: indexList.contains(index) ? Colors.blueAccent : Colors.black,
+                    leading: Text("$index"),
+                    title: Text(drawerList[index].title.toString()),
+                    subtitle: Text("$indexList"),
+                  );
+                },),
             )
 
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage(AppAssets.personImage),
+                    ),
+                    Text("Abdullah Rehman"),
+                    Text("abdullahrehman@gmail.com")
+                  ],
+                )),
+            Expanded(
+              child: ListView.builder(
+                itemCount: drawerList.length,
+                itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  onTap: (){
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  selected: selectedIndex == index,
+                  selectedColor: CupertinoColors.activeBlue,
+                  selectedTileColor: Colors.lightBlueAccent.withOpacity(0.1),
+                  leading: Icon(drawerList[index].icon),
+                  title: Text(drawerList[index].title.toString()),
+                );
+              },),
+            )
           ],
         ),
       ),
