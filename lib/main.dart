@@ -1,10 +1,12 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owais_project/extra/date_time_picker.dart';
 import 'package:owais_project/extra/pageView.dart';
 import 'package:owais_project/extra/settings.dart';
 import 'package:owais_project/extra/tab_bar.dart';
+import 'package:owais_project/firebase_options.dart';
 import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/screens/home/beverages.dart';
 import 'package:owais_project/screens/home/bottom_bar.dart';
@@ -17,7 +19,11 @@ import 'package:owais_project/screens/profile/profile.dart';
 import 'package:owais_project/screens/start_screen/onBoarding_screen.dart';
 import 'package:owais_project/screens/start_screen/splash_screen.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(
     DevicePreview(
       enabled: true,

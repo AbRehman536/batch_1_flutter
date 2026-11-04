@@ -33,6 +33,29 @@ class ProductService {
         .update({"productStock" : model.productStock});
   }
   ///Get All Products
+  Stream<List<ProductModel>> getAllProducts(){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
   ///Get In Stock Products
+  Stream<List<ProductModel>> getInStockProducts(){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .where("productStock", isEqualTo: true)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
   ///Get Out Stock Products
+  Stream<List<ProductModel>> getOutStockProducts(){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .where("productStock", isEqualTo: false)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
 }
