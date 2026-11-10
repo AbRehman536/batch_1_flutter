@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "360977781189",
+    "project_id": "batch-1-86d33",
+    "storage_bucket": "batch-1-86d33.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360977781189:android:c4823a1fc517c9ff7dfbac",
+        "android_client_info": {
+          "package_name": "com.example.owais_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDC9wzpb6qgOMmus2ZZ8dLjHdbTYxI-gA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
