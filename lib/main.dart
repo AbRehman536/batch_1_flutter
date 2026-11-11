@@ -8,6 +8,7 @@ import 'package:owais_project/extra/settings.dart';
 import 'package:owais_project/extra/tab_bar.dart';
 import 'package:owais_project/firebase_options.dart';
 import 'package:owais_project/screens/admin_panel/products/create_product.dart';
+import 'package:owais_project/screens/admin_panel/products/get_all_products.dart';
 import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/screens/home/beverages.dart';
 import 'package:owais_project/screens/home/bottom_bar.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
 
-          home: CreateProduct(),
+          home: AdminHomeScreen(),
         );
       },
     );

@@ -1,56 +1,140 @@
 import 'package:flutter/material.dart';
-import 'package:owais_project/constants/app_colors.dart';
 
-class CustomGrid extends StatelessWidget {
+import '../../constants/app_colors.dart';
+import '../../models/product_model.dart';
+
+class CustomContainer extends StatelessWidget {
   final String image;
   final String title;
-  final String ml;
-  final int price;
-  const CustomGrid({
-    super.key, required this.image, required this.title, required this.ml, required this.price});
+  final String subTitle;
+  final double price;
+
+  final String? productID;
+  final ProductModel? product;
+  final VoidCallback? onEdit;
+  final VoidCallback? onTap;
+  final VoidCallback? addCart;
+  final bool? stock;
+
+  const CustomContainer({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.subTitle,
+    required this.price,
+    this.productID,
+    this.product,
+    this.onEdit, this.onTap, this.stock, this.addCart,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 248,
-        width: 170,
-      decoration: BoxDecoration(
-        color: AppColors.secondaryColor,
-        borderRadius: .circular(18),
-        border: Border.all(
-          color: Color(0xffE2E2E2),
-          width: 1
-        )
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-         // crossAxisAlignment: .start,
-          children: [
-            Image.asset(image,width: 80,height: 80,),
-            Text(title, style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: Colors.black
-            ),),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(ml, style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Color(0xff7C7C7C)
-              ),),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("\$${price}"),
-                FloatingActionButton(
-                  backgroundColor: AppColors.primaryColor,
-                  onPressed: (){},child: Icon(Icons.add),)
-              ],
-            )
-          ],
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    return InkWell(
+      //onTap: onTap,
+      child: Container(
+        width: 173,
+        height: 320,
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xff1e1e1e) : Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(width: 0.4, color: isDark ? Colors.grey.shade700 : AppColors.greyColor),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  color: isDark ? Colors.white : AppColors.darkColor,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                "$subTitle, Price ",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: isDark ? Colors.grey[400] : AppColors.greyColor,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "\$$price",
+                    style: TextStyle(
+                      color: isDark ? Colors.white : AppColors.darkColor,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                    ),
+                  ),
+                  FloatingActionButton.small(
+                    onPressed: addCart,
+                    backgroundColor: AppColors.primaryColor,
+                    elevation: 0,
+                    foregroundColor: Colors.white,
+                    child: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     if (product != null)
+              //       IconButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (context) => UpdateProduct(product: product!),
+              //             ),
+              //           );
+              //         },
+              //         icon: const Icon(Icons.edit, color: Colors.blue),
+              //       )
+              //     else if (onEdit != null)
+              //       IconButton(
+              //         onPressed: onEdit,
+              //         icon: const Icon(Icons.edit, color: Colors.blue),
+              //       )
+              //     else
+              //       const SizedBox.shrink(),
+              //     if (productID != null)
+              //       IconButton(
+              //         onPressed: () async {
+              //           try {
+              //             await ProductService().deleteProduct(productID!);
+              //           } catch (e) {
+              //             if (context.mounted) {
+              //               ScaffoldMessenger.of(context).showSnackBar(
+              //                 SnackBar(content: Text(e.toString())),
+              //               );
+              //             }
+              //           }
+              //         },
+              //         icon: const Icon(Icons.delete, color: Colors.red),
+              //       )
+              //     else
+              //       const SizedBox.shrink(),
+              //     Checkbox(
+              //         value: product?.productStock,
+              //         onChanged: (val)async{
+              //           await ProductService().markStockProduct(
+              //               productID!,
+              //               val!);
+              //         })
+              //   ],
+              // ),
+              if(stock == false)
+                Text("Out of Stock", style: TextStyle(color: Colors.red))
+            ],
+          ),
         ),
       ),
     );

@@ -15,7 +15,7 @@ class BottomBarScreen extends StatefulWidget {
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
   List<Widget> screenList = [
-    HomeScreen(),
+    //HomeScreen(),
    // ExploreScreen(),
     MyCartScreen(),
     FavoriteScreen(),
