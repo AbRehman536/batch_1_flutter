@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../constants/app_colors.dart';
 import '../../models/product_model.dart';
+import '../../screens/admin_panel/products/update_product.dart';
+import '../../services/product_service.dart';
 
 class CustomContainer extends StatelessWidget {
   final String image;
@@ -83,54 +85,54 @@ class CustomContainer extends StatelessWidget {
                   ),
                 ],
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     if (product != null)
-              //       IconButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) => UpdateProduct(product: product!),
-              //             ),
-              //           );
-              //         },
-              //         icon: const Icon(Icons.edit, color: Colors.blue),
-              //       )
-              //     else if (onEdit != null)
-              //       IconButton(
-              //         onPressed: onEdit,
-              //         icon: const Icon(Icons.edit, color: Colors.blue),
-              //       )
-              //     else
-              //       const SizedBox.shrink(),
-              //     if (productID != null)
-              //       IconButton(
-              //         onPressed: () async {
-              //           try {
-              //             await ProductService().deleteProduct(productID!);
-              //           } catch (e) {
-              //             if (context.mounted) {
-              //               ScaffoldMessenger.of(context).showSnackBar(
-              //                 SnackBar(content: Text(e.toString())),
-              //               );
-              //             }
-              //           }
-              //         },
-              //         icon: const Icon(Icons.delete, color: Colors.red),
-              //       )
-              //     else
-              //       const SizedBox.shrink(),
-              //     Checkbox(
-              //         value: product?.productStock,
-              //         onChanged: (val)async{
-              //           await ProductService().markStockProduct(
-              //               productID!,
-              //               val!);
-              //         })
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (product != null)
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateProduct(product: product!),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.edit, color: Colors.blue),
+                    )
+                  else if (onEdit != null)
+                    IconButton(
+                      onPressed: onEdit,
+                      icon: const Icon(Icons.edit, color: Colors.blue),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  if (productID != null)
+                    IconButton(
+                      onPressed: () async {
+                        try {
+                          await ProductService().deleteProduct(productID!);
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())),
+                            );
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  // Checkbox(
+                  //     value: product?.productStock,
+                  //     onChanged: (val)async{
+                  //       await ProductService().markStockProduct(
+                  //           productID!,
+                  //           val!);
+                  //     })
+                ],
+              ),
               if(stock == false)
                 Text("Out of Stock", style: TextStyle(color: Colors.red))
             ],

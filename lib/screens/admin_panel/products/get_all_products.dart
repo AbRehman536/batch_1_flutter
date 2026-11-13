@@ -64,7 +64,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     itemCount: productList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CustomContainer(
-                        product: productList[index],
+                          productID: productList[index].docId.toString(),
+                          product: productList[index],
                           image: AppAssets.pepperImage,
                           title: productList[index].productName.toString(),
                           subTitle: productList[index].productDesc.toString(),

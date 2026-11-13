@@ -4,10 +4,6 @@
 
 import 'dart:convert';
 
-ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.decode(str));
-
-String productModelToJson(ProductModel data) => json.encode(data.toJson());
-
 class ProductModel {
   final String? docId;
   final String? productImage;
@@ -43,8 +39,8 @@ class ProductModel {
     createdAt: json["createdAt"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "docId": docId,
+  Map<String, dynamic> toJson(String productID) => {
+    "docId": productID,
     "productImage": productImage,
     "productName": productName,
     "productDesc": productDesc,

@@ -6,9 +6,14 @@ class ProductService {
   String productCollection = "Product Collection";
   ///Create Product
   Future createProduct(ProductModel model)async{
+    DocumentReference docRef =
+    await FirebaseFirestore.instance
+        .collection(productCollection)
+        .doc();
     return await FirebaseFirestore.instance
         .collection(productCollection)
-        .add(model.toJson());
+        .doc(docRef.id)
+        .set(model.toJson(docRef.id));
   }
   ///Update Product
   Future updateProduct(ProductModel model)async{
@@ -16,21 +21,21 @@ class ProductService {
         .collection(productCollection)
         .doc(model.docId)
         .update({"productName" : model.productName,
-    "productImage" : model.productImage});
+              "productImage" : model.productImage});
   }
   ///Delete Product
-  Future deleteProduct(ProductModel model)async{
+  Future deleteProduct(String productID)async{
     return await FirebaseFirestore.instance
         .collection(productCollection)
-        .doc(model.docId)
+        .doc(productID)
         .delete();
   }
   ///Mark Product
-  Future markProduct(ProductModel model)async{
+  Future markProduct(String productID, bool isStock)async{
     return await FirebaseFirestore.instance
         .collection(productCollection)
-        .doc(model.docId)
-        .update({"productStock" : model.productStock});
+        .doc(productID)
+        .update({"productStock" : isStock});
   }
   ///Get All Products
   Stream<List<ProductModel>> getAllProducts(){
