@@ -124,17 +124,19 @@ class CustomContainer extends StatelessWidget {
                     )
                   else
                     const SizedBox.shrink(),
-                  // Checkbox(
-                  //     value: product?.productStock,
-                  //     onChanged: (val)async{
-                  //       await ProductService().markStockProduct(
-                  //           productID!,
-                  //           val!);
-                  //     })
+                  Checkbox(
+                      value: product?.productStock,
+                      onChanged: (val)async{
+                        await ProductService().markProduct(
+                            productID!,
+                            val!);
+                      })
                 ],
               ),
               if(stock == false)
                 Text("Out of Stock", style: TextStyle(color: Colors.red))
+              else
+                Text("In Stock", style: TextStyle(color: Colors.green))
             ],
           ),
         ),
