@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
 import 'package:owais_project/models/product_model.dart';
+import 'package:owais_project/screens/admin_panel/category/get_all_category.dart';
 import 'package:owais_project/screens/admin_panel/products/create_product.dart';
 import 'package:owais_project/screens/admin_panel/products/get_inStock_products.dart';
 import 'package:owais_project/screens/admin_panel/products/get_out_stock_product.dart';
@@ -40,6 +41,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> OutStockScreen()));
           }, icon: Icon(Icons.close)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminExploreScreen()));
+          }, icon: Icon(Icons.category)),
         ],
       ),
       body: SafeArea(
