@@ -6,6 +6,7 @@ import 'package:owais_project/models/Category_model.dart';
 import 'package:owais_project/models/product_model.dart';
 import 'package:owais_project/screens/admin_panel/category/create_category.dart';
 import 'package:owais_project/screens/admin_panel/category/update_category.dart';
+import 'package:owais_project/screens/admin_panel/products/get_product.dart';
 import 'package:owais_project/services/Category_service.dart';
 import 'package:owais_project/utils/widgets/custom_appbar.dart';
 import 'package:provider/provider.dart';
@@ -99,6 +100,9 @@ class _AdminExploreScreenState extends State<AdminExploreScreen> {
                                 IconButton(onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=> UpdateCategory(model: categoryList[index])));
                                 }, icon: Icon(Icons.edit,color: Colors.green,)),
+                                IconButton(onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> GetProduct(model: categoryList[index])));
+                                }, icon: Icon(Icons.arrow_forward,color: Colors.blue,)),
                               ],)
                             ],
                           ),

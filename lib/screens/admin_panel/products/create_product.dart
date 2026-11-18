@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:owais_project/models/product_model.dart';
+import 'package:owais_project/services/Category_service.dart';
 import 'package:owais_project/services/product_service.dart';
+
+import '../../../models/Category_model.dart';
 
 class CreateProduct extends StatefulWidget {
   const CreateProduct({super.key});
@@ -16,7 +19,19 @@ class _CreateProductState extends State<CreateProduct> {
   TextEditingController detailsController = TextEditingController();
   TextEditingController nutritionController = TextEditingController();
 
+  List<CategoryModel> categoryList = [];
+  CategoryModel? selectedCategory;
   bool isLoading = false;
+  @override
+  void initState(){
+    super.initState();
+    CategoryService().getCategory()
+    .then((val){
+      setState(() {
+        categoryList = val;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +76,20 @@ class _CreateProductState extends State<CreateProduct> {
             ),
           ),
           SizedBox(height: 10,),
+          DropdownButtonFormField(
+            hint: Text("Select Category"),
+              value: selectedCategory,
+              items: categoryList.map((category){
+                return DropdownMenuItem(
+                  value: category,
+                    child: Text(category.categoryName.toString()));
+              }).toList(),
+              onChanged: (val){
+              setState(() {
+                selectedCategory = val;
+              });
+              }),
+          SizedBox(height: 10,),
           isLoading ? Center(child: CircularProgressIndicator(),)
           :ElevatedButton(onPressed: ()async{
             try{
@@ -68,6 +97,7 @@ class _CreateProductState extends State<CreateProduct> {
               setState(() {});
               await ProductService().createProduct(
                 ProductModel(
+                  categoryID: selectedCategory!.docId,
                   productName: titleController.text,
                   productDesc: descController.text,
                   productPrice: double.parse(priceController.text),

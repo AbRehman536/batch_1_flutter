@@ -63,4 +63,14 @@ class ProductService {
         .map((productList) => productList.docs
         .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
   }
+
+  ///Get Product By Category ID
+  Stream<List<ProductModel>> getProductByCategoryID(String categoryID){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .where("categoryID" , isEqualTo:  categoryID)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
 }
