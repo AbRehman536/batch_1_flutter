@@ -14,6 +14,8 @@ class ProductModel {
   final String? productDetail;
   final int? productNutrition;
   final bool? productStock;
+  final List<dynamic>? myCart;
+  final List<dynamic>? favorite;
   final int? createdAt;
 
   ProductModel({
@@ -26,6 +28,8 @@ class ProductModel {
     this.productDetail,
     this.productNutrition,
     this.productStock,
+    this.myCart,
+    this.favorite,
     this.createdAt,
   });
 
@@ -39,6 +43,8 @@ class ProductModel {
     productDetail: json["productDetail"],
     productNutrition: json["productNutrition"],
     productStock: json["productStock"],
+    myCart: json["myCart"] == null ? [] : List<dynamic>.from(json["myCart"]!.map((x) => x)),
+    favorite: json["favorite"] == null ? [] : List<dynamic>.from(json["favorite"]!.map((x) => x)),
     createdAt: json["createdAt"],
   );
 
@@ -52,6 +58,8 @@ class ProductModel {
     "productDetail": productDetail,
     "productNutrition": productNutrition,
     "productStock": productStock,
+    "myCart": myCart == null ? [] : List<dynamic>.from(myCart!.map((x) => x)),
+    "favorite": favorite == null ? [] : List<dynamic>.from(favorite!.map((x) => x)),
     "createdAt": createdAt,
   };
 }

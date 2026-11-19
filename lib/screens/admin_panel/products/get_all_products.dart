@@ -4,6 +4,7 @@ import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
 import 'package:owais_project/models/product_model.dart';
 import 'package:owais_project/screens/admin_panel/category/get_all_category.dart';
+import 'package:owais_project/screens/admin_panel/products/admin_cart.dart';
 import 'package:owais_project/screens/admin_panel/products/create_product.dart';
 import 'package:owais_project/screens/admin_panel/products/get_inStock_products.dart';
 import 'package:owais_project/screens/admin_panel/products/get_out_stock_product.dart';
@@ -44,6 +45,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminExploreScreen()));
           }, icon: Icon(Icons.category)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminCartScreen()));
+          }, icon: Icon(Icons.shopping_cart_outlined)),
         ],
       ),
       body: SafeArea(
@@ -84,6 +88,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       itemCount: productList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return CustomContainer(
+                          addCart: (){
+                            ProductService().addToCart(
+                                userID: "101",
+                                productID: productList[index].docId.toString())
+                                .then((value){
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(content: Text("Product Add To Cart")));
+                            });
+                          },
                             stock: productList[index].productStock,
                             productID: productList[index].docId.toString(),
                             product: productList[index],
