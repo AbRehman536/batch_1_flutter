@@ -100,4 +100,64 @@ class ProductService {
         .doc(productID)
         .update({"myCart": FieldValue.arrayRemove([userID])});
   }
+  ///Get Favorite Products
+  Stream<List<ProductModel>> getFavoriteProducts(String userID){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .where("favorite", arrayContains: userID)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
+  ///add to favorite
+  Future addToFavorite({
+    required String userID, required String productID
+})async{
+    return await FirebaseFirestore.instance
+        .collection(productCollection)
+        .doc(productID)
+        .update({"favorite": FieldValue.arrayUnion([userID])});
+  }
+  ///remove From Favorite
+  Future removeFromFavorite({
+    required String userID, required String productID
+  })async{
+    return await FirebaseFirestore.instance
+        .collection(productCollection)
+        .doc(productID)
+        .update({"favorite": FieldValue.arrayRemove([userID])});
+  }
+
+  ///Get Exclusive Offer Products
+  Stream<List<ProductModel>> getExclusiveOfferProducts(){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .where("exclusiveOffer", isEqualTo: true)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
+  ///Mark Product Exclusive
+  Future markExclusiveProduct(String productID, bool value)async{
+    return await FirebaseFirestore.instance
+        .collection(productCollection)
+        .doc(productID)
+        .update({"exclusiveOffer" : value});
+  }
+  ///Get Best Selling Products
+  Stream<List<ProductModel>> getBestSellingProducts(){
+    return FirebaseFirestore.instance
+        .collection(productCollection)
+        .where("bestSelling", isEqualTo: true)
+        .snapshots()
+        .map((productList) => productList.docs
+        .map((productJson) => ProductModel.fromJson(productJson.data())).toList());
+  }
+  ///Mark Product Best Selling
+  Future markBestSellingProduct(String productID, bool value)async{
+    return await FirebaseFirestore.instance
+        .collection(productCollection)
+        .doc(productID)
+        .update({"bestSelling" : value});
+  }
 }

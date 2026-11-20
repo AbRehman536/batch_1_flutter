@@ -22,6 +22,8 @@ class _CreateProductState extends State<CreateProduct> {
   List<CategoryModel> categoryList = [];
   CategoryModel? selectedCategory;
   bool isLoading = false;
+  bool isExclusiveOffer = false;
+  bool isBestSelling = false;
   @override
   void initState(){
     super.initState();
@@ -90,6 +92,35 @@ class _CreateProductState extends State<CreateProduct> {
               });
               }),
           SizedBox(height: 10,),
+          Row(
+            children: [
+              Row(
+                children: [
+                  Checkbox(
+                      value: isBestSelling,
+                      onChanged: (val){
+                        setState(() {
+                          isBestSelling = val ?? false;
+                        });
+                      }),
+                  Text("Best Selling")
+                ],
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                      value: isExclusiveOffer,
+                      onChanged: (val){
+                        setState(() {
+                          isExclusiveOffer = val ?? false;
+                        });
+                      }),
+                  Text("Exclusive Offer")
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 10,),
           isLoading ? Center(child: CircularProgressIndicator(),)
           :ElevatedButton(onPressed: ()async{
             try{
@@ -103,6 +134,8 @@ class _CreateProductState extends State<CreateProduct> {
                   productPrice: double.parse(priceController.text),
                   productDetail: detailsController.text,
                   productNutrition: int.parse(nutritionController.text),
+                  exclusiveOffer: isExclusiveOffer,
+                  bestSelling: isBestSelling,
                   productStock: true,
                   createdAt: DateTime.now().millisecondsSinceEpoch
                 )

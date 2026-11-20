@@ -33,7 +33,7 @@ class CustomContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
-      //onTap: onTap,
+      onTap: onTap,
       child: Container(
         width: 173,
         height: 320,
