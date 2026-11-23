@@ -47,6 +47,28 @@ class CustomContainer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(
+                alignment: Alignment.center,
+                child: (image.isNotEmpty && image != "null" && image.startsWith('http'))
+                    ? Image.network(
+                        image,
+                        width: 89,
+                        height: 79,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.image_not_supported, size: 50),
+                      )
+                    : (image.isNotEmpty && image != "null" && !image.startsWith('http'))
+                        ? Image.asset(
+                            image,
+                            width: 89,
+                            height: 79,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.image, size: 50),
+                          )
+                        : const Icon(Icons.image, size: 50),
+              ),
               Text(
                 title,
                 style: TextStyle(

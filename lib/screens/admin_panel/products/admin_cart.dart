@@ -20,9 +20,9 @@ class AdminCartScreen extends StatelessWidget {
             title: "My Cart",
           )),
       body:
-      StreamProvider.value(
+      StreamProvider<List<ProductModel>>.value(
           value: ProductService().getMyCartProducts("101"),
-          initialData: [ProductModel()],
+          initialData: const [],
           builder: (context, child){
             List<ProductModel> productList = context.watch<List<ProductModel>>();
             return Padding(
@@ -33,8 +33,17 @@ class AdminCartScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: productList.length,
                       itemBuilder: (BuildContext context, int index) {
+                        final img = productList[index].productImage;
                         return ListTile(
-                          leading: Image.asset(AppAssets.pepperImage),
+                          leading: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: (img != null && img.isNotEmpty && img.startsWith('http'))
+                                ? Image.network(img, fit: BoxFit.cover, errorBuilder: (c, e, s) => Image.asset(AppAssets.pepperImage))
+                                : (img != null && img.isNotEmpty && img != "null")
+                                    ? Image.asset(img, fit: BoxFit.cover, errorBuilder: (c, e, s) => Image.asset(AppAssets.pepperImage))
+                                    : Image.asset(AppAssets.pepperImage),
+                          ),
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

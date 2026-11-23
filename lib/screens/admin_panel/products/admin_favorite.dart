@@ -24,9 +24,9 @@ class _AdminFavoriteScreenState extends State<AdminFavoriteScreen> {
           child: CustomAppbar(
               title: "Favorite")),
       body:
-      StreamProvider.value(
+      StreamProvider<List<ProductModel>>.value(
           value: ProductService().getFavoriteProducts("101"),
-          initialData: [ProductModel()],
+          initialData: const [],
           builder: (context,child){
             List<ProductModel> favoriteList = context.watch<List<ProductModel>>();
             return Padding(
@@ -37,10 +37,17 @@ class _AdminFavoriteScreenState extends State<AdminFavoriteScreen> {
                     child: ListView.builder(
                       itemCount: favoriteList.length,
                       itemBuilder: (BuildContext context, int index) {
+                        final img = favoriteList[index].productImage;
                         return ListTile(
-                          leading: Image.asset(AppAssets.product1Image
-                             // favoriteList[index].productImage.toString()
-                        ),
+                          leading: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: (img != null && img.isNotEmpty && img.startsWith('http'))
+                                ? Image.network(img, fit: BoxFit.cover, errorBuilder: (c, e, s) => Image.asset(AppAssets.product1Image))
+                                : (img != null && img.isNotEmpty && img != "null")
+                                    ? Image.asset(img, fit: BoxFit.cover, errorBuilder: (c, e, s) => Image.asset(AppAssets.product1Image))
+                                    : Image.asset(AppAssets.product1Image),
+                          ),
                           title: Text(favoriteList[index].productName.toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.w900

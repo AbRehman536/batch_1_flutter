@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
 import 'package:owais_project/models/product_model.dart';
 import 'package:owais_project/screens/admin_panel/category/get_all_category.dart';
@@ -58,138 +56,143 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              // CarouselSlider(
-              //     items: imageList.map((images){
-              //       return Container(
-              //         decoration: BoxDecoration(
-              //             borderRadius: .circular(15),
-              //             image: DecorationImage(
-              //                 image: NetworkImage(images),
-              //                 fit: BoxFit.cover
-              //             )
-              //         ),
-              //       );
-              //     }).toList(),
-              //     options: CarouselOptions(
-              //         autoPlay: true,
-              //         viewportFraction: 0.8,
-              //         enlargeCenterPage: true,
-              //         onPageChanged: (index, reason){
-              //           setState(() {
-              //             selectedImage = index;
-              //           });
-              //         }
-              //     )),
-              Text("Exclusive Offer"),
-              StreamProvider.value(
-                value: ProductService().getExclusiveOfferProducts(),
-                initialData: [ProductModel()],
-                builder: (context, child){
-                  List<ProductModel> productList = context.watch<List<ProductModel>>();
-                  return  Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: productList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CustomContainer(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailScreen(model: productList[index])));
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // CarouselSlider(
+                //     items: imageList.map((images){
+                //       return Container(
+                //         decoration: BoxDecoration(
+                //             borderRadius: .circular(15),
+                //             image: DecorationImage(
+                //                 image: NetworkImage(images),
+                //                 fit: BoxFit.cover
+                //             )
+                //         ),
+                //       );
+                //     }).toList(),
+                //     options: CarouselOptions(
+                //         autoPlay: true,
+                //         viewportFraction: 0.8,
+                //         enlargeCenterPage: true,
+                //         onPageChanged: (index, reason){
+                //           setState(() {
+                //             selectedImage = index;
+                //           });
+                //         }
+                //     )),
+                Text("Exclusive Offer"),
+                StreamProvider<List<ProductModel>>.value(
+                  value: ProductService().getExclusiveOfferProducts(),
+                  initialData: const [],
+                  builder: (context, child){
+                    List<ProductModel> productList = context.watch<List<ProductModel>>();
+                    return  SizedBox(
+                      height: 300,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CustomContainer(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailScreen(model: productList[index])));
+                              },
+                            addCart: () async {
+                              await ProductService().addToCart(
+                                  userID: "101",
+                                  productID: productList[index].docId.toString());
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(content: Text("Product Added To Cart")));
+                              }
                             },
-                          addCart: (){
-                            ProductService().addToCart(
-                                userID: "101",
-                                productID: productList[index].docId.toString())
-                                .then((value){
+                              stock: productList[index].productStock,
+                              productID: productList[index].docId.toString(),
+                              product: productList[index],
+                              image: productList[index].productImage ?? "",
+                              title: productList[index].productName ?? "",
+                              subTitle: productList[index].productDesc ?? "",
+                              price: productList[index].productPrice ?? 0.0);
+                        },),
+                    );
+                  },
+                ),
+
+                Text("Best Selling"),
+                StreamProvider<List<ProductModel>>.value(
+                  value: ProductService().getBestSellingProducts(),
+                  initialData: const [],
+                  builder: (context, child){
+                    List<ProductModel> productList = context.watch<List<ProductModel>>();
+                    return  SizedBox(
+                      height: 300,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CustomContainer(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailScreen(model: productList[index])));
+                              },
+                              addCart: () async {
+                                await ProductService().addToCart(
+                                    userID: "101",
+                                    productID: productList[index].docId.toString());
+                                if (context.mounted) {
                                   ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(content: Text("Product Add To Cart")));
-                            });
-                          },
-                            stock: productList[index].productStock,
-                            productID: productList[index].docId.toString(),
-                            product: productList[index],
-                            image: AppAssets.pepperImage,
-                            title: productList[index].productName.toString(),
-                            subTitle: productList[index].productDesc.toString(),
-                            price: double.parse(productList[index].productPrice.toString()));
-                      },),
-                  );
-                },
-              ),
+                                      .showSnackBar(const SnackBar(content: Text("Product Added To Cart")));
+                                }
+                              },
+                              stock: productList[index].productStock,
+                              productID: productList[index].docId.toString(),
+                              product: productList[index],
+                              image: productList[index].productImage ?? "",
+                              title: productList[index].productName ?? "",
+                              subTitle: productList[index].productDesc ?? "",
+                              price: productList[index].productPrice ?? 0.0);
+                        },),
+                    );
+                  },
+                ),
 
-              Text("Best Selling"),
-              StreamProvider.value(
-                value: ProductService().getBestSellingProducts(),
-                initialData: [ProductModel()],
-                builder: (context, child){
-                  List<ProductModel> productList = context.watch<List<ProductModel>>();
-                  return  Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: productList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CustomContainer(
+                Text("Groceries"),
+                StreamProvider<List<ProductModel>>.value(
+                  value: ProductService().getAllProducts(),
+                  initialData: const [],
+                  builder: (context, child){
+                    List<ProductModel> productList = context.watch<List<ProductModel>>();
+                    return  SizedBox(
+                      height: 300,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CustomContainer(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailScreen(model: productList[index])));
                             },
-                            addCart: (){
-                              ProductService().addToCart(
-                                  userID: "101",
-                                  productID: productList[index].docId.toString())
-                                  .then((value){
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(content: Text("Product Add To Cart")));
-                              });
-                            },
-                            stock: productList[index].productStock,
-                            productID: productList[index].docId.toString(),
-                            product: productList[index],
-                            image: AppAssets.pepperImage,
-                            title: productList[index].productName.toString(),
-                            subTitle: productList[index].productDesc.toString(),
-                            price: double.parse(productList[index].productPrice.toString()));
-                      },),
-                  );
-                },
-              ),
-
-              Text("Groceries"),
-              StreamProvider.value(
-                value: ProductService().getAllProducts(),
-                initialData: [ProductModel()],
-                builder: (context, child){
-                  List<ProductModel> productList = context.watch<List<ProductModel>>();
-                  return  Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: productList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CustomContainer(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailScreen(model: productList[index])));
-                          },
-                            addCart: (){
-                              ProductService().addToCart(
-                                  userID: "101",
-                                  productID: productList[index].docId.toString())
-                                  .then((value){
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(content: Text("Product Add To Cart")));
-                              });
-                            },
-                            stock: productList[index].productStock,
-                            productID: productList[index].docId.toString(),
-                            product: productList[index],
-                            image: AppAssets.pepperImage,
-                            title: productList[index].productName.toString(),
-                            subTitle: productList[index].productDesc.toString(),
-                            price: double.parse(productList[index].productPrice.toString()));
-                      },),
-                  );
-                },
-              ),
-            ],
+                              addCart: () async {
+                                await ProductService().addToCart(
+                                    userID: "101",
+                                    productID: productList[index].docId.toString());
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(content: Text("Product Added To Cart")));
+                                }
+                              },
+                              stock: productList[index].productStock,
+                              productID: productList[index].docId.toString(),
+                              product: productList[index],
+                              image: productList[index].productImage ?? "",
+                              title: productList[index].productName ?? "",
+                              subTitle: productList[index].productDesc ?? "",
+                              price: productList[index].productPrice ?? 0.0);
+                        },),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

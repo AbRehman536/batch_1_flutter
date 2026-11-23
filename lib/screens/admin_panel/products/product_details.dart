@@ -66,7 +66,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
-                      child: Text(AppAssets.onBoarding1),
+                      child: Container(
+                        height: 250,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: (widget.model.productImage != null &&
+                                widget.model.productImage!.isNotEmpty &&
+                                widget.model.productImage!.startsWith('http'))
+                            ? Image.network(
+                                widget.model.productImage!,
+                                fit: BoxFit.contain,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(Icons.image_not_supported, size: 80),
+                              )
+                            : (widget.model.productImage != null &&
+                                    widget.model.productImage!.isNotEmpty &&
+                                    widget.model.productImage != "null")
+                                ? Image.asset(
+                                    widget.model.productImage!,
+                                    fit: BoxFit.contain,
+                                    errorBuilder: (context, error, stackTrace) =>
+                                        const Icon(Icons.image, size: 80),
+                                  )
+                                : const Icon(Icons.image, size: 80),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

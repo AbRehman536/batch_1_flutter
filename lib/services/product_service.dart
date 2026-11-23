@@ -6,8 +6,7 @@ class ProductService {
   String productCollection = "Product Collection";
   ///Create Product
   Future createProduct(ProductModel model)async{
-    DocumentReference docRef =
-    await FirebaseFirestore.instance
+    DocumentReference docRef = FirebaseFirestore.instance
         .collection(productCollection)
         .doc();
     return await FirebaseFirestore.instance
@@ -17,11 +16,20 @@ class ProductService {
   }
   ///Update Product
   Future updateProduct(ProductModel model)async{
+    Map<String, dynamic> updateData = {
+      "productName": model.productName,
+      "productDesc": model.productDesc,
+      "productPrice": model.productPrice,
+      "productDetail": model.productDetail,
+      "productNutrition": model.productNutrition,
+    };
+    if (model.productImage != null && model.productImage!.isNotEmpty) {
+      updateData["productImage"] = model.productImage;
+    }
     return await FirebaseFirestore.instance
         .collection(productCollection)
         .doc(model.docId)
-        .update({"productName" : model.productName,
-              "productImage" : model.productImage});
+        .update(updateData);
   }
   ///Delete Product
   Future deleteProduct(String productID)async{

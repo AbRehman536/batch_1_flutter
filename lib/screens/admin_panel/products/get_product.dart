@@ -68,7 +68,7 @@ class _GetProductState extends State<GetProduct> {
                             stock: productList[index].productStock,
                             productID: productList[index].docId.toString(),
                             product: productList[index],
-                            image: AppAssets.pepperImage,
+                            image: productList[index].productImage ?? "",
                             title: productList[index].productName.toString(),
                             subTitle: productList[index].productDesc.toString(),
                             price: double.parse(productList[index].productPrice.toString()));
