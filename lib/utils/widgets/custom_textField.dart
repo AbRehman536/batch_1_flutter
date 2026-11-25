@@ -6,11 +6,13 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  const CustomTextField({super.key, this.label, required this.hint, this.prefixIcon, this.suffixIcon});
+  final TextEditingController? controller;
+  const CustomTextField({super.key, this.label, required this.hint, this.prefixIcon, this.suffixIcon, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         // filled: true,
         // fillColor: AppColors.secondaryColor,
