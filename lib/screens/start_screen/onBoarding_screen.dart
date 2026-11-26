@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/screens/auth_screen/auth_wrapper.dart';
 import 'package:owais_project/utils/widgets/custom_button.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -33,7 +34,9 @@ class OnboardingScreen extends StatelessWidget {
                   ),),
                 CustomButton(
                     btnLabel: "Get Started",
-                    onPressed: (){}),
+                    onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> AuthWrapper()));
+                    }),
               ],
             ),
           )

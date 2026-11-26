@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/screens/admin_panel/products/get_all_products.dart';
+import 'package:owais_project/screens/auth_screen/reset_password.dart';
+import 'package:owais_project/screens/auth_screen/signup.dart';
+import 'package:owais_project/screens/home/bottom_bar.dart';
+import 'package:owais_project/services/auth.dart';
 import 'package:owais_project/utils/widgets/custom_button.dart';
 import 'package:owais_project/utils/widgets/custom_textField.dart';
 
@@ -12,6 +17,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Color(0xff7C7C7C)
                 ),),
                 CustomTextField(
+                  controller: emailController,
                     hint: "abdullah@gmail.com"),
                 SizedBox(height: 30,),
                 Text("Password",style: TextStyle(
@@ -56,13 +65,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Color(0xff7C7C7C)
                 ),),
                 CustomTextField(
+                  controller: passwordController,
                   hint: "*********",
                   suffixIcon: Icon(Icons.visibility_off_outlined),
                 ),
                 SizedBox(height: 10,),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: TextButton(onPressed: (){}, child: Text("Forget Password?",
+                  child: TextButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPassword()));
+                  }, child: Text("Forget Password?",
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -70,7 +82,46 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),)),
                 ),
                 SizedBox(height: 10,),
-                Center(child: CustomButton(btnLabel: "Login", onPressed: (){})),
+                isLoading ? Center(child: CircularProgressIndicator(),)
+                : Center(
+                    child: CustomButton(
+                        btnLabel: "Login",
+                        onPressed: ()async{
+                          try{
+                            isLoading = true;
+                            setState(() {});
+                            await AuthService().loginUser(
+                                email: emailController.text, 
+                                password: passwordController.text)
+                                .then((val){
+                                  if(val.emailVerified == true){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomBarScreen()));
+                                  }else{
+                                    isLoading = false;
+                                    setState(() {});
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Text("Kindly Verify Your Email"),
+                                          actions: [
+                                            CustomButton(btnLabel: "Back", onPressed: (){
+                                              Navigator.pop(context);
+                                            })
+                                          ],
+                                        );
+                                      },);
+                                  }
+                            });
+                          }catch(e){
+                            isLoading = false;
+                            setState(() {});
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text(e.toString())));
+                            
+                          }
+                        }
+                    )),
 
                 SizedBox(height: 25,),
                 Row(
@@ -82,7 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.w600,
                           color: Color(0xff181725)
                       ),),
-                    TextButton(onPressed: (){}, child: Text("Sign Up",
+                    TextButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
+                    }, child: Text("Sign Up",
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
 import 'package:owais_project/models/User_model.dart';
+import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/services/auth.dart';
 import 'package:owais_project/services/user_service.dart';
 import 'package:owais_project/utils/widgets/custom_button.dart';
@@ -110,6 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             CustomButton(
                                                 btnLabel: "Okay", onPressed: (){
                                                   Navigator.pop(context);
+                                                  Navigator.pop(context);
                                             })
                                           ],
                                         );
@@ -135,7 +137,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fontWeight: FontWeight.w600,
                           color: Color(0xff181725)
                       ),),
-                    TextButton(onPressed: (){}, child: Text("Login",
+                    TextButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+                    }, child: Text("Login",
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/services/auth.dart';
+import 'package:owais_project/utils/widgets/custom_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -84,6 +86,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               trailing: Icon(Icons.arrow_forward_ios),
             ),
             Divider(color: Color(0xffA2A2A2),thickness: 0.6,),
+            CustomButton(
+                btnLabel: "Logout",
+                onPressed: ()async{
+                  await AuthService().logoutUser();
+                })
           ],
         ),
       ),

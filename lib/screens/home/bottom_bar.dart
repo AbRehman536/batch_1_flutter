@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/screens/admin_panel/category/get_all_category.dart';
+import 'package:owais_project/screens/admin_panel/products/get_all_products.dart';
 import 'package:owais_project/screens/home/explore.dart';
 import 'package:owais_project/screens/home/favorite.dart';
 import 'package:owais_project/screens/home/home.dart';
@@ -15,8 +17,8 @@ class BottomBarScreen extends StatefulWidget {
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
   List<Widget> screenList = [
-    //HomeScreen(),
-   // ExploreScreen(),
+    AdminHomeScreen(),
+   AdminExploreScreen(),
     MyCartScreen(),
     FavoriteScreen(),
     ProfileScreen()

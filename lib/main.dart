@@ -9,6 +9,7 @@ import 'package:owais_project/extra/tab_bar.dart';
 import 'package:owais_project/firebase_options.dart';
 import 'package:owais_project/screens/admin_panel/products/create_product.dart';
 import 'package:owais_project/screens/admin_panel/products/get_all_products.dart';
+import 'package:owais_project/screens/auth_screen/auth_wrapper.dart';
 import 'package:owais_project/screens/auth_screen/login.dart';
 import 'package:owais_project/screens/auth_screen/signup.dart';
 import 'package:owais_project/screens/home/beverages.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
 
-          home: SignUpScreen(),
+          home: SplashScreen(),
         );
       },
     );

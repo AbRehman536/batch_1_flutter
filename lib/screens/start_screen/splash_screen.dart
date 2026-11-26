@@ -1,10 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:owais_project/constants/app_assets.dart';
 import 'package:owais_project/constants/app_colors.dart';
+import 'package:owais_project/screens/start_screen/onBoarding_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState(){
+    Timer(
+        Duration(seconds: 3),
+        (){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> OnboardingScreen()));
+        });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
